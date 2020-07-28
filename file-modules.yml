@@ -3,6 +3,15 @@
   become: yes
  
   tasks:
+# create a file
+  - name: create file on a remote server
+    file:
+        path: /home/ansible/users.txt
+        state: touch
+        mode: 755
+        owner: ansible
+    ignore_errors: True
+
 # add block of lines to a file using blockinfile module
   - name: add block of lines to a file abc.txt
     blockinfile:
@@ -61,3 +70,4 @@
     command: rm -rf /home/ansible/test_folder_2
     tags:
         - remove
+    ignore_errors: True

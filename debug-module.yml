@@ -1,0 +1,13 @@
+--- # debug module
+- hosts: localhost
+  become: yes
+
+  tasks:
+  - name: running a simple command
+    shell: echo "echo command ran sucessfully!"
+    register: code_1
+
+  - name: printing variable with some msg
+    debug:
+         msg="{{ code_1.stdout }}"
+    
