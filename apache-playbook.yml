@@ -1,0 +1,15 @@
+--- # Install and enable apache
+- hosts: web-servers
+  become: yes
+
+  tasks:
+  - name: install apache
+    apt:
+       name: apache2
+       state: latest
+  
+  - name: start and enable apache service
+    service:
+       name: apache2
+       state: started
+       enabled: yes 
