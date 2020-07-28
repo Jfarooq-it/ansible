@@ -1,0 +1,63 @@
+--- # File Modules
+- hosts: web-servers
+  become: yes
+ 
+  tasks:
+# add block of lines to a file using blockinfile module
+  - name: add block of lines to a file abc.txt
+    blockinfile:
+        path: /home/ansible/abc.txt
+        block: |
+         Hi this is a test!
+         It will go to the end of the file.
+
+# copy module: copy files/directoty from host to remote hosts
+  - name: copy module
+    copy:
+        src: /home/ansible/ansible/test_file
+        dest: /home/ansible/
+        # force is optional; by default it is set to yes. yes=>it will replace the file if it exist. no=> it will not replace the file
+        force: yes
+
+# copy multiple files at once
+  - name: copy multiple files
+    copy: src=/home/ansible/ansible/test_folder/ dest=/home/ansible
+    with_items:
+          - file1
+          - file2
+
+# create new directory
+  - name: create new directory
+    file:
+        path: /home/ansible/test_folder_2
+        state: directory
+        mode: 0755
+        group: ansible
+        owner: ansible
+
+# create directory if it doesnt exist
+  - name: check for existing directory
+    stat:
+        path: /home/ansible/test_folder
+    register: test_folder
+
+  - name: checcking if it's already existed
+    debug:
+         msg: "test_folder already existed"
+    when: test_folder.stat.exists
+ 
+  - name: create directory if it doesn't exist
+    file:
+        path: /home/ansible/test_folder
+        state: directory
+        mode: 0755
+        group: ansible
+        owner: ansible
+    when: test_folder.stat.exists == false
+
+
+# command module
+  - name: run any linux/shell command
+    command: rm -rf /home/ansible/test_folder_2
+    tags:
+        - remove
