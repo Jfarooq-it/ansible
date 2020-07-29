@@ -6,7 +6,7 @@
   - name: install apache
     apt:
        name: apache2
-       state: latest
+       state: absent
   
   - name: start and enable apache service
     service:
