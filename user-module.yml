@@ -1,0 +1,17 @@
+--- # add user and group
+- hosts: web-servers
+  become: yes
+  tasks:
+
+  - name: create a group
+    group:
+         name: test_group
+  
+
+# create user and assign test_group to a user
+  - name: create user and assign user to test group
+    user:
+        name: sammy.quang
+        group: test_group
+
+
