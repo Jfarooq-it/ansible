@@ -1,3 +1,3 @@
 #!/bin/bash
 
-ansible -i inventory web-servers -m ping
+ansible -i inventory all -m ping
