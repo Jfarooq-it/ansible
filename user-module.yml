@@ -1,5 +1,5 @@
 --- # add user and group
-- hosts: web-servers
+- hosts: all
   become: yes
   tasks:
 

@@ -1,5 +1,5 @@
 --- # Replace Module
-- hosts: web-servers
+- hosts: all
   become: yes
   tasks:
   - name: replace sam with sarah

@@ -1,5 +1,5 @@
 --- # Install and enable apache
-- hosts: web-servers
+- hosts: all
   become: yes
 
   tasks:

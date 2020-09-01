@@ -1,5 +1,5 @@
 --- # Create New User
-- hosts: docker_host
+- hosts: all
   become: yes
  
   tasks:

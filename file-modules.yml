@@ -1,5 +1,5 @@
 --- # File Modules
-- hosts: web-servers
+- hosts: all
   become: yes
  
   tasks:
