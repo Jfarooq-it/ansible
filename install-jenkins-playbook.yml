@@ -1,0 +1,56 @@
+--- # Install Jenkins on Ubuntu
+- hosts: 
+  become: yes
+
+  tasks:
+  - name: install jdk
+    apt:
+        name: default-jdk
+        state: latest
+        install_recommends: no
+
+  - name: install jre
+    apt:
+        name: default-jre
+        state: latest
+        install_recommends: no
+
+  - name: add jenkins repository
+    apt_key:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+        state: present
+
+  - name: import jenkins key
+    apt_repository:
+        repo: 'deb http://pkg.jenkins.io/debian-stable binary/'
+        state: present
+
+  - name: run apt update
+    apt:
+        update_cache: yes
+        force_apt_get: yes
+        cache_valid_time: 3600
+
+  - name: install jenkins
+    apt:
+        name: jenkins
+        update_cache: yes
+        state: present
+
+  - name: start and enable jenkins
+    service:
+        name: jenkins
+        state: started
+        enabled: yes
+
+  - name: sleep for 30 seconds and continue with play
+    wait_for:
+        timeout: 30
+
+  - name: get jenkins init password
+    shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+    register: init_password
+
+  - name: print jenkins init password
+    debug:
+        var: init_password.stdout
