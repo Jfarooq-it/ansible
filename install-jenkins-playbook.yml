@@ -54,3 +54,4 @@
   - name: print jenkins init password
     debug:
         var: init_password.stdout
+      
