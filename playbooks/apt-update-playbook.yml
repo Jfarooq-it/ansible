@@ -1,5 +1,5 @@
 --- # update all pakages
-- hosts: "jenkins-server, kube-master, kube-nodes"
+- hosts: all
   become: yes
   
   tasks:

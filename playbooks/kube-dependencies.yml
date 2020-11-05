@@ -1,5 +1,5 @@
---- # Install Kube Dependencies
-- hosts: "kube-master, kube-nodes"
+--- # Install Kube Dependencies for Master and Workers
+- hosts: all
   become: yes
 
   tasks:
