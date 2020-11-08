@@ -1,5 +1,6 @@
 --- # worker playbook
-- hosts: kube-master
+# CHANGE THE HOST BELOW BEFORE RUNNING THE PLAYBOOK
+- hosts: test-kube-master
   become: yes
   remote_user: ansible
 
@@ -14,7 +15,8 @@
   - name: copy join command to local file
     local_action: copy content="{{ kubernetes_join_command.stdout_lines[0] }}" dest="/tmp/kubernetes_join_command" mode=0777
 
-- hosts: kube-nodes
+# CHANGE THE HOST BELOW BEFORE RUNNING THE PLAYBOOK
+- hosts: test-kube-node
   remote_user: ansible
   become: yes
   become_method: sudo
