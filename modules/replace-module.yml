@@ -1,9 +1,0 @@
---- # Replace Module
-- hosts: all
-  become: yes
-  tasks:
-  - name: replace sam with sarah
-    replace:
-           path: /home/ansible/users.txt
-           regexp: "sam"
-           replace: "sarah"
