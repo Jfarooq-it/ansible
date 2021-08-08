@@ -1,0 +1,45 @@
+--- # Install Docker
+- hosts: all
+  become: yes
+  
+  tasks:
+  - name: install required softwares
+    apt:
+       name: "{{item}}"
+       state: present
+       update_cache: yes
+    loop:
+       - apt-transport-https
+       - ca-certificates
+       - curl
+       - software-properties-common
+       - python3-pip
+       - virtualenv
+       - python3-setuptools
+       - gnupg-agent
+
+  - name: Add Docker GPG apt Key
+    apt_key:
+       url: https://download.docker.com/linux/ubuntu/gpg
+       state: present
+
+  - name: Add Docker Repository
+    apt_repository:
+       repo: deb https://download.docker.com/linux/ubuntu bionic stable
+       state: present
+
+  - name: install docker 
+    apt:
+       name: "{{item}}"
+       state: latest
+       update_cache: yes
+    loop:
+       - docker-ce
+       - docker-ce-cli
+       - containerd.io
+
+  - name: start docker service
+    service:
+       name: docker
+       state: started
+       enabled: yes

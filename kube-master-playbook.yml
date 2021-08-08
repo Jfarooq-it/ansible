@@ -1,0 +1,47 @@
+--- # Kube Master Playbook
+- hosts: all
+  become: yes
+
+  tasks:
+  - name: initialize the cluster
+  # CHANGE THE IP TO THE CORRECT IP
+    shell: kubeadm init --apiserver-advertise-address 192.168.10.6 --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt
+    args:
+       chdir: $HOME
+       creates: cluster_initialized.txt
+  
+  - name: sleep for 60 seconds
+    wait_for:
+       timeout: 60
+
+  - name: create .kube directory
+    become: yes
+    become_user: ansible
+    file:
+       path: $HOME/.kube
+       state: directory
+       mode: 0755
+
+  - name: copy admin.config to user's kube config
+    copy:
+       src: /etc/kubernetes/admin.conf
+       dest: /home/ansible/.kube/config
+       remote_src: yes
+       owner: "ansible"
+       group: "ansible"
+  
+  - name: change net bridge settings
+    lineinfile:
+       path: /etc/sysctl.conf
+       line: net.bridge.bridge-nf-call-iptables=1
+
+  - name: run sysctl -p
+    shell: sysctl -p
+
+  - name: install pod network
+    become: yes
+    become_user: ansible
+    shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml >> pod_network_setup.txt
+    args:
+       chdir: $HOME
+       creates: pod_network_setup.txt
