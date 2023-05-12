@@ -6,7 +6,7 @@
   - name: create new user
     user:
         name: docker
-        password: $5$7DNlVjDbH2Oi29Fo$HPAHvlFnFco1XzvxgrZGfSYIvi1KSKcY2iNuRx9Pz75 
+        password: placeholder
         shell: /bin/bash
         groups: sudo, docker
         append: yes
