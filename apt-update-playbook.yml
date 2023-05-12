@@ -19,3 +19,4 @@
   - name: restart system
     reboot:
        reboot_timeout: 3600
+
