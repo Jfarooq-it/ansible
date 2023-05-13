@@ -109,6 +109,6 @@
 # create user and assign test_group to a user
   - name: create user and assign user to test group
     user:
-        name: sammy.quang
+        name: sam.allan
         group: test_group
 
