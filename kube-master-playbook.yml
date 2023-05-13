@@ -5,7 +5,7 @@
   tasks:
   - name: initialize the cluster
   # CHANGE THE IP TO THE CORRECT IP
-    shell: kubeadm init --apiserver-advertise-address 192.168.10.6 --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt
+    shell: kubeadm init --apiserver-advertise-address 0.0.0.0 --pod-network-cidr=0.0.0.0/16 >> cluster_initialized.txt
     args:
        chdir: $HOME
        creates: cluster_initialized.txt
